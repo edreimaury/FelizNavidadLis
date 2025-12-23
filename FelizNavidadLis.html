@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>🎄 Regalo de Navidad 💖</title>
+
+<style>
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ae92fd, #b02481);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* FONDO GORROS */
+.hat{
+    position:absolute;
+    font-size:40px;
+    animation: subir linear infinite;
+    opacity:0.8;
+}
+
+@keyframes subir{
+    from{
+        transform:translateY(100vh) rotate(0deg);
+        opacity:0;
+    }
+    to{
+        transform:translateY(-120px) rotate(360deg);
+        opacity:1;
+    }
+}
+
+.card{
+    background:rgb(232, 226, 232);
+    width:90%;
+    max-width:420px;
+    padding:20px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+    text-align:center;
+    z-index:10;
+}
+
+.hidden{ display:none; }
+
+input{
+    padding:10px;
+    width:80%;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    margin-top:12px;
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    background:#ff5e78;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff2f55;
+}
+
+/* AVE */
+.bird{
+    font-size:80px;
+    animation: flotar 2s infinite ease-in-out;
+}
+
+@keyframes flotar{
+    0%{ transform:translateY(0); }
+    50%{ transform:translateY(-10px); }
+    100%{ transform:translateY(0); }
+}
+
+/* CORAZÓN CSS PURO */
+.heart-container{
+    position: relative;
+    width: 280px;
+    height: 260px;
+    margin: 20px auto;
+}
+
+.heart{
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    background:#ff6f91;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin-left: -70px;
+    margin-top: -70px;
+    animation: latido 5.5s infinite;
+}
+
+.heart::before,
+.heart::after{
+    content:"";
+    position:absolute;
+    width: 140px;
+    height: 140px;
+    background:#ff6f91;
+    border-radius: 50%;
+}
+
+.heart::before{
+    top:-70px;
+    left:0;
+}
+
+.heart::after{
+    top:0;
+    left:70px;
+}
+
+/* LATIDO */
+@keyframes latido {
+    0%,100% { transform: rotate(-45deg) scale(1); }
+    25% { transform: rotate(-45deg) scale(1.05); }
+    50% { transform: rotate(-45deg) scale(1.1); }
+    75% { transform: rotate(-45deg) scale(1.05); }
+}
+
+/* TEXTO DENTRO DEL CORAZÓN */
+.heart-text{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top:0; left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:rgb(1,0,0);
+    font-family: 'Arial Black', sans-serif;
+    font-size:16px;
+    padding:10px;
+    line-height:1.3;
+    overflow:hidden;
+    word-wrap:break-word;
+    white-space:pre-wrap;
+}
+
+/* BOTONES */
+.nav-buttons button{
+    margin:5px;
+    background:#fd6ae4;
+}
+</style>
+</head>
+<body>
+
+<!-- GORROS NAVIDEÑOS -->
+<script>
+for(let i=0;i<20;i++){
+    let hat = document.createElement("div");
+    hat.className = "hat";
+    hat.innerText = "❄️";
+    hat.style.left = Math.random()*100 + "vw";
+    hat.style.animationDuration = (6 + Math.random()*6) + "s";
+    hat.style.fontSize = (30 + Math.random()*30) + "px";
+    document.body.appendChild(hat);
+}
+</script>
+
+<!-- LOGIN -->
+<div class="card" id="login">
+    <h2>🎁 Regalo Secreto 🎄</h2>
+    <div class="bird">💝</div>
+    <p>Hola 💕 Lis, Feliz Navidad<br>ingresa la clave que tiene el gatito.</p>
+    <input type="password" id="clave" placeholder="Clave secreta">
+    <br>
+    <button onclick="verificar()">Abrir 💖</button>
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- CONTENIDO -->
+<div class="card hidden" id="contenido">
+    <div class="bird">💝✨</div>
+    <p>Felicidades, lograste acceder a 4 pensamientos de mi corazón 💕</p>
+
+    <div class="heart-container">
+        <div class="heart"></div>
+        <div class="heart-text" id="texto"></div>
+    </div>
+
+<div class="nav-buttons"> <button onclick="mostrar(0)">💌</button> <button onclick="mostrar(1)">💌</button> <button onclick="mostrar(2)">💌</button> <button onclick="mostrar(3)">💌</button> </div> </div>
+
+
+<script>
+const CLAVE = "Noviembre2026";
+
+  let mensajes = [
+"Lis tambien quise estar presente para tí en este día y decirte que aunque no esté contigo por el momento, siempre estas en mi corazón 💕🐦", 
+"En esta Navidad quiero ser esa persona que más desee tu corazón...\nY preservar tu corazón con tus mas dulces sentimientos 💖",
+"Quisiera ver la sonrisa que se dibuja en tu rostro al contemplar las cosas bonitas de la vida,\nVer tu sonrisa diariamente,\nSerá mi mejor regalo 🎄✨",
+"No importa la distancia ni el lugar...\nMi corazón siempre te elegirá a ti 💕🐦"
+];
+
+let i=0, timer;
+
+function verificar(){
+    if(clave.value === CLAVE){
+        login.classList.add("hidden");
+        contenido.classList.remove("hidden");
+        mostrar(0);
+    }else{
+        error.innerText = "Pregúntale al gato la clave para abrirlo ❄️";
+    }
+}
+
+function mostrar(n){
+    clearInterval(timer);
+    texto.innerText = "";
+    i=0;
+    timer = setInterval(()=>{
+        texto.innerText += mensajes[n].charAt(i);
+        i++;
+        if(i >= mensajes[n].length) clearInterval(timer);
+    },45);
+}
+</script>
+
+</body>
+</html>
